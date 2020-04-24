@@ -6,17 +6,19 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const userSchema = require('./schemas/userSchema');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 require('./passport/localStrategy');
 
 const app = express();
 
-const sess = {
+let sess = {
     secret: keys.secret,
     cookie: {},
     resave: false,
     saveUninitialized: false,
-    maxAge: 60 * 60 * 24
+    maxAge: 60 * 60 * 24,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
 }
 
 if (app.get('env') === 'production') {
