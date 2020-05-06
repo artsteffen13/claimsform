@@ -3,6 +3,7 @@ LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
 const userSchema = require('../schemas/userSchema')
 const User = mongoose.model('User', userSchema);
+const bcrypt = require('bcrypt');
 
 passport.serializeUser(function (user, done) {
     done(null, user.id);
@@ -20,11 +21,15 @@ passport.use(new LocalStrategy(
         User.findOne({ user: username }, function(err, user) {
             if (err) { return done(err); }
             if (!user) {
-                return done(null, false, { message: 'Incorrect username.' });
+                return done(null, false, {message: 'Wrong Username'});
             }
-            if (user.password !== password) {
-                return done(null, false, { message: 'Incorrect password.' });
-            }return done(null, user);
+            bcrypt.compare(password, user.password, function(err, result) {
+                if (result) {
+                    return done(null, user)
+                } else {
+                    return done(null, false, {message: 'Wrong Password'});
+                }
+            });
         });
     }
 ));

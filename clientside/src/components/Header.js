@@ -1,21 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import NavItem from "./NavItem";
 import '../css/header.css';
-import axios from 'axios';
 
-const Header = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+const Header = (props) => {
 
-    useEffect(() => {
-        axios.get('/userinfo')
-            .then((response) => {
-                if (response.data.user) {
-                    setIsLoggedIn(true)
-                } else {
-                    setIsLoggedIn(false)
-                }
-            })
-    },[])
+    const logout = () => {
+        window.location.reload()
+    }
 
     return (
         <>
@@ -28,8 +19,8 @@ const Header = () => {
             <NavItem link="/">Dashboard</NavItem>
             </span>
             <div className="header">
-                <NavItem link="/login">{isLoggedIn ? 'Log Out' : 'Log In'}</NavItem>
-                {isLoggedIn ? <NavItem link="/newclaim">New Claim</NavItem> : null}
+                {props.isLoggedIn ? <span onClick={logout}><NavItem link="/logout">Log Out</NavItem></span> : <NavItem link="/login">Log In</NavItem>}
+                {props.isLoggedIn ? <NavItem link="/newclaim">New Claim</NavItem> : <NavItem link="/signup">Sign Up</NavItem>}
 
             </div>
         </>
