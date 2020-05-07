@@ -111,13 +111,6 @@ function a11yProps(index) {
 const NewClaim = () => {
     const [value, setValue] = useState(0);
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const [vehicleValues, setVehicleValues] = useState({
-        year: '',
-        make: '',
-        model: '',
-        color: '',
-        plate: ''
-    });
     const [driverValues, setDriverValues] = useState({
         firstName: '',
         lastName: '',
@@ -133,15 +126,29 @@ const NewClaim = () => {
         altContactPhoneNumber: '',
         altContactEmail: ''
     });
+    const [vehicleValues, setVehicleValues] = useState({
+        year: '',
+        make: '',
+        model: '',
+        color: '',
+        plate: '',
+        drivable: '',
+        safeToDrive: '',
+        lightsWork: '',
+        airbags: '',
+        vehicleTowed: '',
+        towLocationName: '',
+        towStreetAddress: '',
+        towCity: '',
+        towState: '',
+        towZipcode: '',
+        towPhoneNumber: ''
+    });
     const [accidentValues, setAccidentValues] = useState({
         accidentDetails: '',
         accidentStreet: '',
         accidentCity: '',
         accidentState: '',
-        drivable: '',
-        safeToDrive: '',
-        lightsWork: '',
-        airbags: '',
         mobileDevice: '',
         handsFree: '',
         seatBelt: '',
@@ -153,15 +160,9 @@ const NewClaim = () => {
         damagePhotos: '',
         scenePhotos: '',
         atFault: '',
-        vehicleTowed: '',
-        towLocationName: '',
-        towStreetAddress: '',
-        towCity: '',
-        towState: '',
-        towZipcode: '',
-        towPhoneNumber: ''
     });
     const [thirdPartyValues, setThirdPartyValues] = useState({
+        thirdPartyInvolved: '',
         firstName: '',
         lastName: '',
         phoneNumber: '',
@@ -188,6 +189,23 @@ const NewClaim = () => {
         ownerCity: '',
         ownerState: '',
         ownerZipcode: ''
+    });
+    const [policeValues, setPoliceValues] = useState({
+        policeContacted: '',
+        policeDepartmentName: '',
+        policeReportNumber: '',
+        policePhoneNumber: '',
+        wereCitationsIssued: '',
+        whoReceivedCitation: ''
+    });
+    const [repairShopValues, setRepairShopValues] = useState({
+        vehicleDamaged: '',
+        repairShopName: '',
+        repairShopPhoneNumber: '',
+        repairShopStreetAddress: '',
+        repairShopCity: '',
+        repairShopState: '',
+        repairShopZipcode: ''
     });
 
 
@@ -226,6 +244,20 @@ const NewClaim = () => {
     const thirdPartyInfoChange = (e) => {
         const {name, value} = e.target;
         setThirdPartyValues(prevValues => {
+            return ({...prevValues, [name]: value})
+        });
+    }
+
+    const policeInfoChange = (e) => {
+        const {name, value} = e.target;
+        setPoliceValues(prevValues => {
+            return ({...prevValues, [name]: value})
+        });
+    }
+
+    const repairShopInfoChange = (e) => {
+        const {name, value} = e.target;
+        setRepairShopValues(prevValues => {
             return ({...prevValues, [name]: value})
         });
     }
@@ -279,7 +311,9 @@ const NewClaim = () => {
                         <Tab icon={<PersonPinIcon/>} label="Accident" {...a11yProps(2)} />
                         <Tab icon={<PersonPinIcon/>} label="Other Parties" {...a11yProps(3)} />
                         <Tab icon={<PersonPinIcon/>} label="Police Info" {...a11yProps(4)} />
-                        <Tab icon={<PersonPinIcon/>} label="Summary" {...a11yProps(5)} />
+                        <Tab icon={<PersonPinIcon/>} label="Repair Shop" {...a11yProps(5)} />
+                        <Tab icon={<PersonPinIcon/>} label="Notes" {...a11yProps(6)} />
+                        <Tab icon={<PersonPinIcon/>} label="Summary" {...a11yProps(7)} />
                     </Tabs>
                 </Paper>
             </AppBar>
@@ -464,6 +498,135 @@ const NewClaim = () => {
                         onChange={vehicleInfoChange}
                         value={vehicleValues.plate}
                     />
+                    <br/>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="drivable">Vehicle Drivable?</InputLabel>
+                        <Select
+                            labelId="drivable"
+                            id="drivable"
+                            name='drivable'
+                            value={vehicleValues.drivable}
+                            onChange={vehicleInfoChange}
+                        >
+                            <MenuItem value={'Yes'}>Yes</MenuItem>
+                            <MenuItem value={'No'}>No</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="safeToDrive">Vehicle Safe To Drive?</InputLabel>
+                        <Select
+                            labelId="safeToDrive"
+                            id="safeToDrive"
+                            name='safeToDrive'
+                            value={vehicleValues.safeToDrive}
+                            onChange={vehicleInfoChange}
+                        >
+                            <MenuItem value={'Yes'}>Yes</MenuItem>
+                            <MenuItem value={'No'}>No</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="lightsWork">Do All Lights Work?</InputLabel>
+                        <Select
+                            labelId="lightsWork"
+                            id="lightsWork"
+                            name='lightsWork'
+                            value={vehicleValues.lightsWork}
+                            onChange={vehicleInfoChange}
+                        >
+                            <MenuItem value={'Yes'}>Yes</MenuItem>
+                            <MenuItem value={'No'}>No</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="airbags">Airbags Deploy?</InputLabel>
+                        <Select
+                            labelId="airbags"
+                            id="airbags"
+                            name='airbags'
+                            value={vehicleValues.airbags}
+                            onChange={vehicleInfoChange}
+                        >
+                            <MenuItem value={'Yes'}>Yes</MenuItem>
+                            <MenuItem value={'No'}>No</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <br/>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="vehicleTowed">Was The Vehicle Towed?</InputLabel>
+                        <Select
+                            labelId="vehicleTowed"
+                            id="vehicleTowed"
+                            name='vehicleTowed'
+                            value={vehicleValues.vehicleTowed}
+                            onChange={vehicleInfoChange}
+                        >
+                            <MenuItem value={'Yes'}>Yes</MenuItem>
+                            <MenuItem value={'No'}>No</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <br/>
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='Tow Location Name'
+                        name='towLocationName'
+                        id='towLocationName'
+                        onChange={vehicleInfoChange}
+                        disabled={vehicleValues.vehicleTowed !== 'Yes'}
+                        value={vehicleValues.towLocationName}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='Street Address'
+                        name='towStreetAddress'
+                        id='towStreetAddress'
+                        onChange={vehicleInfoChange}
+                        disabled={vehicleValues.vehicleTowed !== 'Yes'}
+                        value={vehicleValues.towStreetAddress}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='City'
+                        name='towCity'
+                        id='towCity'
+                        onChange={vehicleInfoChange}
+                        disabled={vehicleValues.vehicleTowed !== 'Yes'}
+                        value={vehicleValues.towCity}
+                    />
+                    <br/>
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='State'
+                        name='towState'
+                        id='towState'
+                        onChange={vehicleInfoChange}
+                        disabled={vehicleValues.vehicleTowed !== 'Yes'}
+                        value={vehicleValues.towState}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='Zipcode'
+                        name='towZipcode'
+                        id='towZipcode'
+                        onChange={vehicleInfoChange}
+                        disabled={vehicleValues.vehicleTowed !== 'Yes'}
+                        value={vehicleValues.towZipcode}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='number'
+                        label='Phone Number'
+                        name='towPhoneNumber'
+                        id='towPhoneNumber'
+                        onChange={vehicleInfoChange}
+                        disabled={vehicleValues.vehicleTowed !== 'Yes'}
+                        value={vehicleValues.towPhoneNumber}
+                    />
                 </TabPanel>
                 <TabPanel value={value} index={2} style={{margin: 'auto', textAlign: 'center'}}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -475,6 +638,7 @@ const NewClaim = () => {
                                 margin="normal"
                                 id="date-picker-inline"
                                 label="Date of Incident"
+                                name='selectedDate'
                                 value={selectedDate}
                                 onChange={handleDateChange}
                                 KeyboardButtonProps={{
@@ -486,6 +650,7 @@ const NewClaim = () => {
                                 margin="normal"
                                 id="time-picker"
                                 label="Time of Incident"
+                                name='selectedDate'
                                 value={selectedDate}
                                 onChange={handleDateChange}
                                 KeyboardButtonProps={{
@@ -536,59 +701,6 @@ const NewClaim = () => {
                         onChange={accidentInfoChange}
                         value={accidentValues.accidentState}
                     />
-                    <br/>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="drivable">Vehicle Drivable?</InputLabel>
-                        <Select
-                            labelId="drivable"
-                            id="drivable"
-                            name='drivable'
-                            value={accidentValues.drivable}
-                            onChange={accidentInfoChange}
-                        >
-                            <MenuItem value={'Yes'}>Yes</MenuItem>
-                            <MenuItem value={'No'}>No</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="safeToDrive">Vehicle Safe To Drive?</InputLabel>
-                        <Select
-                            labelId="safeToDrive"
-                            id="safeToDrive"
-                            name='safeToDrive'
-                            value={accidentValues.safeToDrive}
-                            onChange={accidentInfoChange}
-                        >
-                            <MenuItem value={'Yes'}>Yes</MenuItem>
-                            <MenuItem value={'No'}>No</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="lightsWork">Do All Lights Work?</InputLabel>
-                        <Select
-                            labelId="lightsWork"
-                            id="lightsWork"
-                            name='lightsWork'
-                            value={accidentValues.lightsWork}
-                            onChange={accidentInfoChange}
-                        >
-                            <MenuItem value={'Yes'}>Yes</MenuItem>
-                            <MenuItem value={'No'}>No</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="airbags">Airbags Deploy?</InputLabel>
-                        <Select
-                            labelId="airbags"
-                            id="airbags"
-                            name='airbags'
-                            value={accidentValues.airbags}
-                            onChange={accidentInfoChange}
-                        >
-                            <MenuItem value={'Yes'}>Yes</MenuItem>
-                            <MenuItem value={'No'}>No</MenuItem>
-                        </Select>
-                    </FormControl>
                     <br/>
                     <FormControl className={classes.formControl} style={{minWidth: '350px'}}>
                         <InputLabel id="mobileDevice">On A Mobile Device At Time Of Incident?</InputLabel>
@@ -730,84 +842,24 @@ const NewClaim = () => {
                             <MenuItem value={'No'}>No</MenuItem>
                         </Select>
                     </FormControl>
-                    <br/>
+                </TabPanel>
+                <TabPanel value={value} index={3} style={{margin: 'auto', textAlign: 'center'}}>
                     <FormControl className={classes.formControl}>
-                        <InputLabel id="vehicleTowed">Was The Vehicle Towed?</InputLabel>
+                        <InputLabel id="thirdPartyInvolved">Was Another Vehicle Involved?</InputLabel>
                         <Select
-                            labelId="vehicleTowed"
-                            id="vehicleTowed"
-                            name='vehicleTowed'
-                            value={accidentValues.vehicleTowed}
-                            onChange={accidentInfoChange}
+                            labelId="thirdPartyInvolved"
+                            style={{minWidth: '300px'}}
+                            id="thirdPartyInvolved"
+                            name='thirdPartyInvolved'
+                            value={thirdPartyValues.thirdPartyInvolved}
+                            onChange={thirdPartyInfoChange}
                         >
                             <MenuItem value={'Yes'}>Yes</MenuItem>
                             <MenuItem value={'No'}>No</MenuItem>
                         </Select>
                     </FormControl>
                     <br/>
-                    <CssTextField
-                        className={classes.margin}
-                        type='text'
-                        label='Tow Location Name'
-                        name='towLocationName'
-                        id='towLocationName'
-                        onChange={accidentInfoChange}
-                        disabled={accidentValues.vehicleTowed !== 'Yes'}
-                        value={accidentValues.towLocationName}
-                    />
-                    <CssTextField
-                        className={classes.margin}
-                        type='text'
-                        label='Street Address'
-                        name='towStreetAddress'
-                        id='towStreetAddress'
-                        onChange={accidentInfoChange}
-                        disabled={accidentValues.vehicleTowed !== 'Yes'}
-                        value={accidentValues.towStreetAddress}
-                    />
-                    <CssTextField
-                        className={classes.margin}
-                        type='text'
-                        label='City'
-                        name='towCity'
-                        id='towCity'
-                        onChange={accidentInfoChange}
-                        disabled={accidentValues.vehicleTowed !== 'Yes'}
-                        value={accidentValues.towCity}
-                    />
-                    <br/>
-                    <CssTextField
-                        className={classes.margin}
-                        type='text'
-                        label='State'
-                        name='towState'
-                        id='towState'
-                        onChange={accidentInfoChange}
-                        disabled={accidentValues.vehicleTowed !== 'Yes'}
-                        value={accidentValues.towState}
-                    />
-                    <CssTextField
-                        className={classes.margin}
-                        type='text'
-                        label='Zipcode'
-                        name='towZipcode'
-                        id='towZipcode'
-                        onChange={accidentInfoChange}
-                        disabled={accidentValues.vehicleTowed !== 'Yes'}
-                        value={accidentValues.towZipcode}
-                    />
-                    <CssTextField
-                        className={classes.margin}
-                        type='text'
-                        label='Phone Number'
-                        name='towPhoneNumber'
-                        id='towPhoneNumber'
-                        onChange={accidentInfoChange}
-                        disabled={accidentValues.vehicleTowed !== 'Yes'}
-                        value={accidentValues.towPhoneNumber}
-                    />
-                </TabPanel>
-                <TabPanel value={value} index={3} style={{margin: 'auto', textAlign: 'center'}}>
+                    <span style={thirdPartyValues.thirdPartyInvolved === 'Yes' ? null : {display: 'none'}}>
                     <CssTextField
                         className={classes.margin}
                         type='text'
@@ -911,7 +963,7 @@ const NewClaim = () => {
                     <h2>Third Party Vehicle Info</h2>
                     <CssTextField
                         className={classes.margin}
-                        type='text'
+                        type='number'
                         label='Year'
                         name='year'
                         id='year'
@@ -1006,8 +1058,8 @@ const NewClaim = () => {
                         onChange={thirdPartyInfoChange}
                         disabled={thirdPartyValues.ownerSameAsDriver === 'Yes'}
                         value={
-                            thirdPartyValues.ownerSameAsDriver === 'Yes' ?  thirdPartyValues.firstName
-                        : thirdPartyValues.ownerFirstName
+                            thirdPartyValues.ownerSameAsDriver === 'Yes' ? thirdPartyValues.firstName
+                                : thirdPartyValues.ownerFirstName
                         }
                     />
                     <CssTextField
@@ -1019,7 +1071,7 @@ const NewClaim = () => {
                         onChange={thirdPartyInfoChange}
                         disabled={thirdPartyValues.ownerSameAsDriver === 'Yes'}
                         value={
-                            thirdPartyValues.ownerSameAsDriver === 'Yes' ?  thirdPartyValues.lastName
+                            thirdPartyValues.ownerSameAsDriver === 'Yes' ? thirdPartyValues.lastName
                                 : thirdPartyValues.ownerLastName
                         }
                     />
@@ -1032,7 +1084,7 @@ const NewClaim = () => {
                         onChange={thirdPartyInfoChange}
                         disabled={thirdPartyValues.ownerSameAsDriver === 'Yes'}
                         value={
-                            thirdPartyValues.ownerSameAsDriver === 'Yes' ?  thirdPartyValues.phoneNumber
+                            thirdPartyValues.ownerSameAsDriver === 'Yes' ? thirdPartyValues.phoneNumber
                                 : thirdPartyValues.ownerPhoneNumber
                         }
                     />
@@ -1045,7 +1097,7 @@ const NewClaim = () => {
                         onChange={thirdPartyInfoChange}
                         disabled={thirdPartyValues.ownerSameAsDriver === 'Yes'}
                         value={
-                            thirdPartyValues.ownerSameAsDriver === 'Yes' ?  thirdPartyValues.email
+                            thirdPartyValues.ownerSameAsDriver === 'Yes' ? thirdPartyValues.email
                                 : thirdPartyValues.ownerEmail
                         }
                     />
@@ -1059,7 +1111,7 @@ const NewClaim = () => {
                         onChange={thirdPartyInfoChange}
                         disabled={thirdPartyValues.ownerSameAsDriver === 'Yes'}
                         value={
-                            thirdPartyValues.ownerSameAsDriver === 'Yes' ?  thirdPartyValues.streetAddress
+                            thirdPartyValues.ownerSameAsDriver === 'Yes' ? thirdPartyValues.streetAddress
                                 : thirdPartyValues.ownerStreetAddress
                         }
                     />
@@ -1072,7 +1124,7 @@ const NewClaim = () => {
                         onChange={thirdPartyInfoChange}
                         disabled={thirdPartyValues.ownerSameAsDriver === 'Yes'}
                         value={
-                            thirdPartyValues.ownerSameAsDriver === 'Yes' ?  thirdPartyValues.city
+                            thirdPartyValues.ownerSameAsDriver === 'Yes' ? thirdPartyValues.city
                                 : thirdPartyValues.ownerCity
                         }
                     />
@@ -1085,7 +1137,7 @@ const NewClaim = () => {
                         onChange={thirdPartyInfoChange}
                         disabled={thirdPartyValues.ownerSameAsDriver === 'Yes'}
                         value={
-                            thirdPartyValues.ownerSameAsDriver === 'Yes' ?  thirdPartyValues.state
+                            thirdPartyValues.ownerSameAsDriver === 'Yes' ? thirdPartyValues.state
                                 : thirdPartyValues.ownerState
                         }
                     />
@@ -1098,16 +1150,163 @@ const NewClaim = () => {
                         onChange={thirdPartyInfoChange}
                         disabled={thirdPartyValues.ownerSameAsDriver === 'Yes'}
                         value={
-                            thirdPartyValues.ownerSameAsDriver === 'Yes' ?  thirdPartyValues.zipcode
+                            thirdPartyValues.ownerSameAsDriver === 'Yes' ? thirdPartyValues.zipcode
                                 : thirdPartyValues.ownerZipcode
                         }
                     />
+                    </span>
                 </TabPanel>
                 <TabPanel value={value} index={4} style={{margin: 'auto', textAlign: 'center'}}>
-                    Item Three
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="policeContacted">Were Police Contacted?</InputLabel>
+                        <Select
+                            labelId="policeContacted"
+                            id="policeContacted"
+                            name='policeContacted'
+                            value={policeValues.policeContacted}
+                            onChange={policeInfoChange}
+                        >
+                            <MenuItem value={'Yes'}>Yes</MenuItem>
+                            <MenuItem value={'No'}>No</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <br/>
+                    <span style={policeValues.policeContacted === 'Yes' ? null : {display: 'none'}}>
+                        <CssTextField
+                            className={classes.margin}
+                            type='text'
+                            label='Police Department Name'
+                            name='policeDepartmentName'
+                            id='policeDepartmentName'
+                            onChange={policeInfoChange}
+                            value={policeValues.policeDepartmentName}
+                        />
+                        <CssTextField
+                            className={classes.margin}
+                            type='text'
+                            label='Case/Report Number'
+                            name='policeReportNumber'
+                            id='policeReportNumber'
+                            onChange={policeInfoChange}
+                            value={policeValues.policeReportNumber}
+                        />
+                        <CssTextField
+                            className={classes.margin}
+                            type='number'
+                            label='Phone Number'
+                            name='policePhoneNumber'
+                            id='policePhoneNumber'
+                            onChange={policeInfoChange}
+                            value={policeValues.policePhoneNumber}
+                        />
+                        <br/>
+                        <FormControl className={classes.formControl}>
+                        <InputLabel id="wereCitationsIssued">Any Citations/Tickets Issued?</InputLabel>
+                        <Select
+                            labelId="wereCitationsIssued"
+                            id="wereCitationsIssued"
+                            name='wereCitationsIssued'
+                            value={policeValues.wereCitationsIssued}
+                            style={{minWidth: '260px'}}
+                            onChange={policeInfoChange}
+                        >
+                            <MenuItem value={'Yes'}>Yes</MenuItem>
+                            <MenuItem value={'No'}>No</MenuItem>
+                            <MenuItem value={'Unknown'}>Unknown</MenuItem>
+                        </Select>
+                    </FormControl>
+                        <CssTextField
+                            className={classes.margin}
+                            type='text'
+                            label='To Whom?'
+                            name='whoReceivedCitation'
+                            id='whoReceivedCitation'
+                            disabled={policeValues.wereCitationsIssued !== 'Yes'}
+                            multiline
+                            onChange={policeInfoChange}
+                            value={policeValues.whoReceivedCitation}
+                        />
+                    </span>
                 </TabPanel>
                 <TabPanel value={value} index={5} style={{margin: 'auto', textAlign: 'center'}}>
-                    Item Three
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="vehicleDamaged">Was The Vehicle Damaged?</InputLabel>
+                        <Select
+                            labelId="vehicleDamaged"
+                            id="vehicleDamaged"
+                            name='vehicleDamaged'
+                            value={repairShopValues.vehicleDamaged}
+                            style={{minWidth: '260px'}}
+                            onChange={repairShopInfoChange}
+                        >
+                            <MenuItem value={'Yes'}>Yes</MenuItem>
+                            <MenuItem value={'No'}>No</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <br/>
+                    <span style={repairShopValues.vehicleDamaged === 'Yes' ? null : {display: 'none'}}>
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='Repair Shop Name'
+                        name='repairShopName'
+                        id='repairShopName'
+                        onChange={repairShopInfoChange}
+                        value={repairShopValues.repairShopName}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='number'
+                        label='Phone Number'
+                        name='repairShopPhoneNumber'
+                        id='repairShopPhoneNumber'
+                        onChange={repairShopInfoChange}
+                        value={repairShopValues.repairShopPhoneNumber}
+                    />
+                    <br/>
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='Street Address'
+                        name='repairShopStreetAddress'
+                        id='repairShopStreetAddress'
+                        onChange={repairShopInfoChange}
+                        value={repairShopValues.repairShopStreetAddress}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='City'
+                        name='repairShopCity'
+                        id='repairShopCity'
+                        onChange={repairShopInfoChange}
+                        value={repairShopValues.repairShopCity}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='State'
+                        name='repairShopState'
+                        id='repairShopState'
+                        onChange={repairShopInfoChange}
+                        value={repairShopValues.repairShopState}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='Zipcode'
+                        name='repairShopZipcode'
+                        id='repairShopZipcode'
+                        onChange={repairShopInfoChange}
+                        value={repairShopValues.repairShopZipcode}
+                    />
+                    </span>
+                </TabPanel>
+                <TabPanel value={value} index={6} style={{margin: 'auto', textAlign: 'center'}}>
+                    Coming Soon
+                </TabPanel>
+                <TabPanel value={value} index={7} style={{margin: 'auto', textAlign: 'center'}}>
+                    Coming Soon
                 </TabPanel>
             </form>
         </div>
