@@ -135,6 +135,9 @@ const NewClaim = () => {
     });
     const [accidentValues, setAccidentValues] = useState({
         accidentDetails: '',
+        accidentStreet: '',
+        accidentCity: '',
+        accidentState: '',
         drivable: '',
         safeToDrive: '',
         lightsWork: '',
@@ -149,7 +152,14 @@ const NewClaim = () => {
         weather: '',
         damagePhotos: '',
         scenePhotos: '',
-        atFault: ''
+        atFault: '',
+        vehicleTowed: '',
+        towLocationName: '',
+        towStreetAddress: '',
+        towCity: '',
+        towState: '',
+        towZipcode: '',
+        towPhoneNumber: ''
     });
     const [thirdPartyValues, setThirdPartyValues] = useState({
         firstName: '',
@@ -498,6 +508,35 @@ const NewClaim = () => {
                         value={accidentValues.accidentDetails}
                     />
                     <br/>
+                    <CssTextField
+                        className={classes.margin}
+                        style={{width: '300px'}}
+                        type='text'
+                        label='Street Name Or Address Of Incident'
+                        name='accidentStreet'
+                        id='accidentStreet'
+                        onChange={accidentInfoChange}
+                        value={accidentValues.accidentStreet}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='City'
+                        name='accidentCity'
+                        id='accidentCity'
+                        onChange={accidentInfoChange}
+                        value={accidentValues.accidentCity}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='State'
+                        name='accidentState'
+                        id='accidentState'
+                        onChange={accidentInfoChange}
+                        value={accidentValues.accidentState}
+                    />
+                    <br/>
                     <FormControl className={classes.formControl}>
                         <InputLabel id="drivable">Vehicle Drivable?</InputLabel>
                         <Select
@@ -605,7 +644,7 @@ const NewClaim = () => {
                             <MenuItem value={'Not Determined'}>Not Determined</MenuItem>
                         </Select>
                     </FormControl>
-                    <br/>ThirdPartyValues
+                    <br/>
                     <FormControl className={classes.formControl}>
                         <InputLabel id="passengers">Any Passengers?</InputLabel>
                         <Select
@@ -691,6 +730,82 @@ const NewClaim = () => {
                             <MenuItem value={'No'}>No</MenuItem>
                         </Select>
                     </FormControl>
+                    <br/>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="vehicleTowed">Was The Vehicle Towed?</InputLabel>
+                        <Select
+                            labelId="vehicleTowed"
+                            id="vehicleTowed"
+                            name='vehicleTowed'
+                            value={accidentValues.vehicleTowed}
+                            onChange={accidentInfoChange}
+                        >
+                            <MenuItem value={'Yes'}>Yes</MenuItem>
+                            <MenuItem value={'No'}>No</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <br/>
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='Tow Location Name'
+                        name='towLocationName'
+                        id='towLocationName'
+                        onChange={accidentInfoChange}
+                        disabled={accidentValues.vehicleTowed !== 'Yes'}
+                        value={accidentValues.towLocationName}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='Street Address'
+                        name='towStreetAddress'
+                        id='towStreetAddress'
+                        onChange={accidentInfoChange}
+                        disabled={accidentValues.vehicleTowed !== 'Yes'}
+                        value={accidentValues.towStreetAddress}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='City'
+                        name='towCity'
+                        id='towCity'
+                        onChange={accidentInfoChange}
+                        disabled={accidentValues.vehicleTowed !== 'Yes'}
+                        value={accidentValues.towCity}
+                    />
+                    <br/>
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='State'
+                        name='towState'
+                        id='towState'
+                        onChange={accidentInfoChange}
+                        disabled={accidentValues.vehicleTowed !== 'Yes'}
+                        value={accidentValues.towState}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='Zipcode'
+                        name='towZipcode'
+                        id='towZipcode'
+                        onChange={accidentInfoChange}
+                        disabled={accidentValues.vehicleTowed !== 'Yes'}
+                        value={accidentValues.towZipcode}
+                    />
+                    <CssTextField
+                        className={classes.margin}
+                        type='text'
+                        label='Phone Number'
+                        name='towPhoneNumber'
+                        id='towPhoneNumber'
+                        onChange={accidentInfoChange}
+                        disabled={accidentValues.vehicleTowed !== 'Yes'}
+                        value={accidentValues.towPhoneNumber}
+                    />
                 </TabPanel>
                 <TabPanel value={value} index={3} style={{margin: 'auto', textAlign: 'center'}}>
                     <CssTextField
