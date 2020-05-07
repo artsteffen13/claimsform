@@ -41,8 +41,7 @@ module.exports = (app) => {
 
     app.post('/login/authorize', passport.authenticate('local', {
         successRedirect: '/',
-        failureRedirect: '/loginIncorrect',
-        failureFlash: true
+        failureRedirect: '/loginIncorrect'
     }));
 
     app.get('/userinfo', (req, res) => {

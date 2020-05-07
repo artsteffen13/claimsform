@@ -21,13 +21,13 @@ passport.use(new LocalStrategy(
         User.findOne({ user: username }, function(err, user) {
             if (err) { return done(err); }
             if (!user) {
-                return done(null, false, {message: 'Wrong Username'});
+                return done(null, false);
             }
             bcrypt.compare(password, user.password, function(err, result) {
                 if (result) {
                     return done(null, user)
                 } else {
-                    return done(null, false, {message: 'Wrong Password'});
+                    return done(null, false);
                 }
             });
         });
