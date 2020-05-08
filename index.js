@@ -5,7 +5,8 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-var flash = require('connect-flash');
+const flash = require('connect-flash');
+const sslRedirect = require('heroku-ssl-redirect');
 
 require('./passport/localStrategy');
 
@@ -32,6 +33,7 @@ app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(flash());
+app.use(sslRedirect());
 
 // const firstTest = new ClaimInfo({
 //     name: 'Art,',
