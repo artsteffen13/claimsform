@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import {
     withStyles,
     makeStyles,
@@ -30,6 +31,8 @@ const useTabStyles = makeStyles({
     root: {
         flexGrow: 1,
         margin: "auto",
+        width: '100%',
+        maxWidth: '1200px'
     },
 });
 
@@ -88,7 +91,7 @@ function TabPanel(props) {
         >
             {value === index && (
                 <Box p={3}>
-                    <Typography>{children}</Typography>
+                    <Typography component={'span'}>{children}</Typography>
                 </Box>
             )}
         </div>
@@ -208,6 +211,9 @@ const NewClaim = () => {
         repairShopZipcode: ''
     });
 
+    const saveForm = () => {
+        console.log(selectedDate, driverValues, vehicleValues, accidentValues, thirdPartyValues, policeValues, repairShopValues);
+    }
 
     const tabClasses = useTabStyles();
     const classes = useStyles();
@@ -273,19 +279,11 @@ const NewClaim = () => {
                     borderBottom: '1px solid gray'
                 }}
             >
-                <Paper square className={tabClasses.root} style={{width: '100%'}}>
-                    <Tabs
-                        variant="fullWidth"
-                        indicatorColor="primary"
-                        textColor="primary"
-                        aria-label="icon label tabs example"
-                        style={{float: 'right'}}
-                    >
-                        <Tab style={{border: '1px solid gray', color: 'green'}} icon={<PhoneIcon/>}
-                             label="Save" {...a11yProps(5)} />
-                        <Tab style={{border: '1px solid gray', color: 'red'}} icon={<PersonPinIcon/>}
-                             label="Delete" {...a11yProps(6)} />
-                    </Tabs>
+                <Paper square className={tabClasses.root} style={{width: '100%', minWidth: '100%'}}>
+                        <Tab onClick={saveForm} style={{border: '1px solid gray', color: 'green', float: 'right'}} icon={<PhoneIcon/>}
+                             label="Save" />
+                        <Tab style={{border: '1px solid gray', color: 'red', float: 'right'}} icon={<PersonPinIcon/>}
+                             label="Delete" />
                 </Paper>
             </AppBar>
             <AppBar
@@ -301,10 +299,11 @@ const NewClaim = () => {
                     <Tabs
                         value={value}
                         onChange={handleChange}
-                        variant="fullWidth"
                         indicatorColor="primary"
                         textColor="primary"
                         aria-label="icon label tabs example"
+                        variant="scrollable"
+                        scrollButtons="auto"
                     >
                         <Tab icon={<PersonPinIcon/>} label="Driver" {...a11yProps(0)} />
                         <Tab icon={<PersonPinIcon/>} label="Vehicle" {...a11yProps(1)} />
@@ -322,6 +321,7 @@ const NewClaim = () => {
                 noValidate autoComplete='off'
                 method="POST"
                 action="#"
+                onSubmit={saveForm}
             >
                 <TabPanel value={value} index={0} style={{margin: 'auto', textAlign: 'center'}}>
                     <CssTextField
