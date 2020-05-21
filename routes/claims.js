@@ -9,13 +9,122 @@ module.exports = (app) => {
             if (err) {
                 res.send(alert('something went wrong'));
             }
+            if (!number) {
+                try {
+                    const firstClaim = new ClaimNumber({
+                        claimNumber: 1,
+                        myID: 'claimNumber'
+                    })
+                    firstClaim.save();
+                } catch (err) {
+                    res.send(err.message)
+                }
+                res.send('ok');
+            }
             if (number) {
                 try {
                     const newClaim = new ClaimInfo({
                         firstName: req.user.firstName,
                         lastName: req.user.lastName,
                         claimNumber: number.claimNumber,
-                        reportedOn: new Date()
+                        reportedOn: new Date(),
+                        selectedDate: req.body.selectedDate,
+                        driverValues: {
+                            firstName: '',
+                            lastName: '',
+                            phoneNumber: '',
+                            email: '',
+                            injured: '',
+                            injuryType: '',
+                            streetAddress: '',
+                            city: '',
+                            state: '',
+                            zipcode: '',
+                            alternateContact: '',
+                            altContactPhoneNumber: '',
+                            altContactEmail: ''
+                        },
+                        vehicleValues: {
+                            year: '',
+                            make: '',
+                            model: '',
+                            color: '',
+                            plate: '',
+                            drivable: '',
+                            safeToDrive: '',
+                            lightsWork: '',
+                            airbags: '',
+                            vehicleTowed: '',
+                            towLocationName: '',
+                            towStreetAddress: '',
+                            towCity: '',
+                            towState: '',
+                            towZipcode: '',
+                            towPhoneNumber: ''
+                        },
+                        accidentValues: {
+                            accidentDetails: '',
+                            accidentStreet: '',
+                            accidentCity: '',
+                            accidentState: '',
+                            mobileDevice: '',
+                            handsFree: '',
+                            seatBelt: '',
+                            passengers: '',
+                            howManyPassengers: '',
+                            passengersInjured: '',
+                            howManyPassengersInjured: '',
+                            weather: '',
+                            damagePhotos: '',
+                            scenePhotos: '',
+                            atFault: ''
+                        },
+                        thirdPartyValues: {
+                            thirdPartyInvolved: '',
+                            firstName: '',
+                            lastName: '',
+                            phoneNumber: '',
+                            email: '',
+                            injured: '',
+                            injuryType: '',
+                            streetAddress: '',
+                            city: '',
+                            state: '',
+                            zipcode: '',
+                            year: '',
+                            make: '',
+                            model: '',
+                            color: '',
+                            plate: '',
+                            damagePhotos: '',
+                            drivable: '',
+                            ownerSameAsDriver: '',
+                            ownerFirstName: '',
+                            ownerLastName: '',
+                            ownerPhoneNumber: '',
+                            ownerEmail: '',
+                            ownerStreetAddress: '',
+                            ownerCity: '',
+                            ownerState: '',
+                            ownerZipcode: ''
+                        },
+                        policeValues: {
+                            policeContacted: '',
+                            policeDepartmentName: '',
+                            policeReportNumber: '',
+                            policePhoneNumber: '',
+                            wereCitationsIssued: '',
+                            whoReceivedCitation: ''
+                        },
+                        repairShopValues: {
+                            vehicleDamaged: '',
+                            repairShopName: '',
+                            repairShopPhoneNumber: '',
+                            repairShopStreetAddress: '',
+                            repairShopCity: '',
+                            repairShopState: '',
+                            repairShopZipcode: ''
+                        }
                     })
                     newClaim.save();
                     ClaimNumber.updateOne({myID: "claimNumber"}, {$set: {claimNumber: number.claimNumber + 1}}).exec();
