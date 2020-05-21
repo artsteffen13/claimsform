@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {
     withStyles,
@@ -111,7 +111,7 @@ function a11yProps(index) {
     };
 }
 
-const NewClaim = () => {
+const NewClaim = (props) => {
     const [value, setValue] = useState(0);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [driverValues, setDriverValues] = useState({
@@ -162,7 +162,7 @@ const NewClaim = () => {
         weather: '',
         damagePhotos: '',
         scenePhotos: '',
-        atFault: '',
+        atFault: ''
     });
     const [thirdPartyValues, setThirdPartyValues] = useState({
         thirdPartyInvolved: '',
@@ -211,8 +211,127 @@ const NewClaim = () => {
         repairShopZipcode: ''
     });
 
+    useEffect(() => {
+        if (window.location.search) {
+            const initialNumber = window.location.search;
+            const claimNumber = initialNumber.slice(1, initialNumber.length);
+            axios.get('/claims/searchbyclaimnumber',
+                {params: {
+                    claimID: claimNumber
+                }})
+                .then(info => {
+                    const driver = info.data.driverValues;
+                    const vehicle = info.data.vehicleValues;
+                    const thirdParty = info.data.thirdPartyValues;
+                    const police = info.data.policeValues;
+                    const repairShop = info.data.repairShopValues;
+
+                    setSelectedDate(info.data.selectedDate);
+                    setDriverValues({
+                        firstName: driver.firstName,
+                        lastName: driver.lastName,
+                        phoneNumber: driver.phoneNumber,
+                        email: driver.email,
+                        injured: driver.injured,
+                        injuryType: driver.injuryType,
+                        streetAddress: driver.streetAddress,
+                        city: driver.city,
+                        state: driver.state,
+                        zipcode: driver.zipcode,
+                        alternateContact: driver.alternateContact,
+                        altContactPhoneNumber: driver.altContactPhoneNumber,
+                        altContactEmail: driver.altContactEmail
+                    })
+                    setVehicleValues({
+                        year: vehicle.year,
+                        make: vehicle.make,
+                        model: vehicle.model,
+                        color: vehicle.color,
+                        plate: vehicle.plate,
+                        drivable: vehicle.drivable,
+                        safeToDrive: vehicle.safeToDrive,
+                        lightsWork: vehicle.lightsWork,
+                        airbags: vehicle.airbags,
+                        vehicleTowed: vehicle.vehicleTowed,
+                        towLocationName: vehicle.towLocationName,
+                        towStreetAddress: vehicle.towStreetAddress,
+                        towCity: vehicle.towCity,
+                        towState: vehicle.towState,
+                        towZipcode: vehicle.towZipcode,
+                        towPhoneNumber: vehicle.towPhoneNumber
+                    })
+                    setThirdPartyValues({
+                        thirdPartyInvolved: thirdParty.thirdPartyInvolved,
+                        firstName: thirdParty.firstName,
+                        lastName: thirdParty.lastName,
+                        phoneNumber: thirdParty.phoneNumber,
+                        email: thirdParty.email,
+                        injured: thirdParty.injured,
+                        injuryType: thirdParty.injuryType,
+                        streetAddress: thirdParty.streetAddress,
+                        city: thirdParty.city,
+                        state: thirdParty.state,
+                        zipcode: thirdParty.zipcode,
+                        year: thirdParty.year,
+                        make: thirdParty.make,
+                        model: thirdParty.model,
+                        color: thirdParty.color,
+                        plate: thirdParty.plate,
+                        damagePhotos: thirdParty.damagePhotos,
+                        drivable: thirdParty.drivable,
+                        ownerSameAsDriver: thirdParty.ownerSameAsDriver,
+                        ownerFirstName: thirdParty.ownerFirstName,
+                        ownerLastName: thirdParty.ownerLastName,
+                        ownerPhoneNumber: thirdParty.ownerPhoneNumber,
+                        ownerEmail: thirdParty.ownerEmail,
+                        ownerStreetAddress: thirdParty.ownerStreetAddress,
+                        ownerCity: thirdParty.ownerCity,
+                        ownerState: thirdParty.ownerState,
+                        ownerZipcode: thirdParty.ownerZipcode
+                    })
+                    setPoliceValues({
+                        policeContacted: police.policeContacted,
+                        policeDepartmentName: police.policeDepartmentName,
+                        policeReportNumber: police.policeReportNumber,
+                        policePhoneNumber: police.policePhoneNumber,
+                        wereCitationsIssued: police.wereCitationsIssued,
+                        whoReceivedCitation: police.whoReceivedCitation
+                    })
+                    setRepairShopValues({
+                        vehicleDamaged: repairShop.vehicleDamaged,
+                        repairShopName: repairShop.repairShopName,
+                        repairShopPhoneNumber: repairShop.repairShopPhoneNumber,
+                        repairShopStreetAddress: repairShop.repairShopStreetAddress,
+                        repairShopCity: repairShop.repairShopCity,
+                        repairShopState: repairShop.repairShopState,
+                        repairShopZipcode: repairShop.repairShopZipcode
+                    })
+                })
+                .catch(err => err);
+        }
+    }, []);
+
     const saveForm = () => {
-        console.log(selectedDate, driverValues, vehicleValues, accidentValues, thirdPartyValues, policeValues, repairShopValues);
+        let claimID;
+        if (window.location.search) {
+            const urlClaimNumber = window.location.search;
+            claimID = urlClaimNumber.slice(1, urlClaimNumber.length);
+        } else {
+            claimID = props.claimNumber;
+        }
+        const claimValues = {
+            selectedDate,
+            driverValues,
+            vehicleValues,
+            accidentValues,
+            thirdPartyValues,
+            policeValues,
+            repairShopValues,
+            claimID
+        };
+        axios.post('/claims/new', claimValues)
+            .then(info => console.log(info))
+            .catch(err => alert(err.message));
     }
 
     const tabClasses = useTabStyles();
@@ -280,10 +399,11 @@ const NewClaim = () => {
                 }}
             >
                 <Paper square className={tabClasses.root} style={{width: '100%', minWidth: '100%'}}>
-                        <Tab onClick={saveForm} style={{border: '1px solid gray', color: 'green', float: 'right'}} icon={<PhoneIcon/>}
-                             label="Save" />
-                        <Tab style={{border: '1px solid gray', color: 'red', float: 'right'}} icon={<PersonPinIcon/>}
-                             label="Delete" />
+                    <Tab onClick={saveForm} style={{border: '1px solid gray', color: 'green', float: 'right'}}
+                         icon={<PhoneIcon/>}
+                         label="Save"/>
+                    <Tab style={{border: '1px solid gray', color: 'red', float: 'right'}} icon={<PersonPinIcon/>}
+                         label="Delete"/>
                 </Paper>
             </AppBar>
             <AppBar

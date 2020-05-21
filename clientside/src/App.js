@@ -13,6 +13,8 @@ import AllFieldsRequired from "./components/errors/AllFieldsRequired";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [claimNumber, setClaimNumber] = useState('');
+    const [claimID, setClaimID] = useState('');
 
     useEffect(() => {
         async function fetchData() {
@@ -27,15 +29,31 @@ function App() {
         fetchData();
     }, []);
 
+    const initialClaim = () => {
+        axios.post('/claims/initial')
+            .then(info => {
+                setClaimNumber(info.data.claimNumber);
+                setClaimID(info.data._id);
+            });
+    };
+
     return (
         <Container maxWidth="xl">
-            <Header isLoggedIn={isLoggedIn}/>
+            <Header
+                isLoggedIn={isLoggedIn}
+                initialClaim={initialClaim}
+                claimNumber={claimNumber}
+            />
             <Route exact path='/'>{isLoggedIn ? <Dashboard/> : <Login/>}</Route>
             <Route path='/login'><Login/></Route>
             <Route path='/signup'><SignUp/></Route>
             <Route path='/userexists'><UserExists/></Route>
             <Route path='/loginincorrect'><LoginIncorrect/></Route>
-            <Route path='/newclaim'><NewClaim/></Route>
+            <Route
+                path='/newclaim'
+                render={(props) => <NewClaim {...props} claimNumber={claimNumber} claimID={claimID} />}
+            />
+            <Route path='/claim/:topic'><NewClaim/></Route>
             <Route path='/allfieldsrequired'><AllFieldsRequired/></Route>
 
         </Container>

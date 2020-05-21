@@ -1,8 +1,6 @@
 const passport = require('passport');
 LocalStrategy = require('passport-local').Strategy;
-const mongoose = require('mongoose');
-const userSchema = require('../schemas/userSchema')
-const User = mongoose.model('User', userSchema);
+const User = require('../schemas/userSchema');
 const bcrypt = require('bcrypt');
 
 passport.serializeUser(function (user, done) {

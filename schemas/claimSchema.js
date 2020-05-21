@@ -1,21 +1,108 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
-const claimSchema = new mongoose.Schema({
-    claimNumber: String,
-    _user: {
-        type: Schema.Types.ObjectID, ref: 'User'
+const claimSchema = new Schema({
+    claimNumber: Number,
+    reportedOn: String,
+    firstName: String,
+    lastName: String,
+    selectedDate: String,
+    driverValues: {
+        firstName: String,
+        lastName: String,
+        phoneNumber: String,
+        email: String,
+        injured: String,
+        injuryType: String,
+        streetAddress: String,
+        city: String,
+        state: String,
+        zipcode: String,
+        alternateContact: String,
+        altContactPhoneNumber: String,
+        altContactEmail: String
     },
-    _firstName: {
-        type: Schema.Types.ObjectID, ref: 'User'
+    vehicleValues: {
+        year: String,
+        make: String,
+        model: String,
+        color: String,
+        plate: String,
+        drivable: String,
+        safeToDrive: String,
+        lightsWork: String,
+        airbags: String,
+        vehicleTowed: String,
+        towLocationName: String,
+        towStreetAddress: String,
+        towCity: String,
+        towState: String,
+        towZipcode: String,
+        towPhoneNumber: String
     },
-    _lastName: {
-        type: Schema.Types.ObjectID, ref: 'User'
+    accidentValues: {
+        accidentDetails: String,
+        accidentStreet: String,
+        accidentCity: String,
+        accidentState: String,
+        mobileDevice: String,
+        handsFree: String,
+        seatBelt: String,
+        passengers: String,
+        howManyPassengers: String,
+        passengersInjured: String,
+        howManyPassengersInjured: String,
+        weather: String,
+        damagePhotos: String,
+        scenePhotos: String,
+        atFault: String
     },
-    name: String,
-    address: String,
-    number: Number,
-    email: String,
+    thirdPartyValues: {
+        thirdPartyInvolved: String,
+        firstName: String,
+        lastName: String,
+        phoneNumber: String,
+        email: String,
+        injured: String,
+        injuryType: String,
+        streetAddress: String,
+        city: String,
+        state: String,
+        zipcode: String,
+        year: String,
+        make: String,
+        model: String,
+        color: String,
+        plate: String,
+        damagePhotos: String,
+        drivable: String,
+        ownerSameAsDriver: String,
+        ownerFirstName: String,
+        ownerLastName: String,
+        ownerPhoneNumber: String,
+        ownerEmail: String,
+        ownerStreetAddress: String,
+        ownerCity: String,
+        ownerState: String,
+        ownerZipcode: String
+    },
+    policeValues: {
+        policeContacted: String,
+        policeDepartmentName: String,
+        policeReportNumber: String,
+        policePhoneNumber: String,
+        wereCitationsIssued: String,
+        whoReceivedCitation: String
+    },
+    repairShopValues: {
+        vehicleDamaged: String,
+        repairShopName: String,
+        repairShopPhoneNumber: String,
+        repairShopStreetAddress: String,
+        repairShopCity: String,
+        repairShopState: String,
+        repairShopZipcode: String
+    }
 });
 
-module.exports = claimSchema;
+module.exports = mongoose.model('claimInfos', claimSchema);

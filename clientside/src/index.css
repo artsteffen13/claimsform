@@ -15,3 +15,12 @@ code {
 h2 {
   font-family: 'Ubuntu';
 }
+
+hr {
+  width: 25%;
+}
+
+li {
+  border: 1px solid blue;
+  padding: 10px;
+}

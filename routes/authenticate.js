@@ -1,14 +1,13 @@
 const passport = require('passport');
 const mongoose = require('mongoose');
-const userSchema = require('../schemas/userSchema');
-const User = mongoose.model('User', userSchema);
+const User = require('../schemas/userSchema');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 module.exports = (app) => {
     app.get('/logout', function(req, res){
         req.logout();
-        res.redirect('/');
+        res.redirect('/');const ClaimNumber = mongoose.model('ClaimNumber');
     });
 
     app.post('/signup/newuser', (req, res) => {

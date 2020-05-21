@@ -6,7 +6,7 @@ const Header = (props) => {
 
     const logout = () => {
         window.location.reload()
-    }
+    };
 
     return (
         <>
@@ -14,13 +14,15 @@ const Header = (props) => {
                 float: 'left',
                 fontSize: '180%',
                 height: '50px',
-                paddingTop: '15px'
+                paddingTop: '15px',
+                color: 'white'
             }}>
             <NavItem link="/">Dashboard</NavItem>
+                {props.claimNumber !== '' ? 'Claim number: ' + props.claimNumber : null}
             </span>
             <div className="header">
                 {props.isLoggedIn ? <span onClick={logout}><NavItem link="/logout">Log Out</NavItem></span> : <NavItem link="/login">Log In</NavItem>}
-                {props.isLoggedIn ? <NavItem link="/newclaim">New Claim</NavItem> : <NavItem link="/signup">Sign Up</NavItem>}
+                {props.isLoggedIn ? <span onClick={props.initialClaim}><NavItem link="/newclaim">New Claim</NavItem></span> : <NavItem link="/signup">Sign Up</NavItem>}
 
             </div>
         </>

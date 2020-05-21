@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const claimNumberSchema = new mongoose.Schema({
-    claimNumber: String,
+    claimNumber: Number,
     myID: String
 });
 
-module.exports = claimNumberSchema;
+module.exports = mongoose.model('ClaimNumber', claimNumberSchema);
