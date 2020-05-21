@@ -9,18 +9,6 @@ module.exports = (app) => {
             if (err) {
                 res.send(alert('something went wrong'));
             }
-            if (!number) {
-                try {
-                    const firstClaim = new ClaimNumber({
-                        claimNumber: 1,
-                        myID: 'claimNumber'
-                    })
-                    firstClaim.save();
-                } catch (err) {
-                    res.send(err.message)
-                }
-                res.send('ok');
-            }
             if (number) {
                 try {
                     const newClaim = new ClaimInfo({
@@ -135,6 +123,12 @@ module.exports = (app) => {
             res.send(number);
         });
     });
+
+    const firstClaim = new ClaimNumber({
+        claimNumber: 1,
+        myID: 'claimNumber'
+    })
+    firstClaim.save();
 
     app.post('/claims/new', requireLogin, (req, res) => {
         const driverValues = req.body.driverValues;
