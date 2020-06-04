@@ -53,7 +53,10 @@ function App() {
                 path='/newclaim'
                 render={(props) => <NewClaim {...props} claimNumber={claimNumber} claimID={claimID} />}
             />
-            <Route path='/claim/:topic'><NewClaim/></Route>
+            <Route
+                path='/claim/:topic'
+                render={(props) => <NewClaim {...props} />}
+            />
             <Route path='/allfieldsrequired'><AllFieldsRequired/></Route>
 
         </Container>

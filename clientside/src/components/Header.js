@@ -18,7 +18,6 @@ const Header = (props) => {
                 color: 'white'
             }}>
             <NavItem link="/">Dashboard</NavItem>
-                {props.claimNumber !== '' ? 'Claim number: ' + props.claimNumber : null}
             </span>
             <div className="header">
                 {props.isLoggedIn ? <span onClick={logout}><NavItem link="/logout">Log Out</NavItem></span> : <NavItem link="/login">Log In</NavItem>}

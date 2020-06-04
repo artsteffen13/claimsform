@@ -254,4 +254,14 @@ module.exports = (app) => {
             res.send(claimInfo);
         });
     });
+
+    app.delete('/claims/deleteclaim', (req, res) => {
+        ClaimInfo.remove({claimNumber: req.query.id}, function (err) {
+            if (err) {
+                res.send('error');
+            } else {
+                res.send('Success');
+            }
+        });
+    })
 }

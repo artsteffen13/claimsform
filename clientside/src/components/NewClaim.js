@@ -113,6 +113,7 @@ function a11yProps(index) {
 
 const NewClaim = (props) => {
     const [value, setValue] = useState(0);
+    const [claimNumber, setClaimNumber] = useState('');
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [driverValues, setDriverValues] = useState({
         firstName: '',
@@ -226,6 +227,7 @@ const NewClaim = (props) => {
                     const police = info.data.policeValues;
                     const repairShop = info.data.repairShopValues;
 
+                    setClaimNumber(claimNumber);
                     setSelectedDate(info.data.selectedDate);
                     setDriverValues({
                         firstName: driver.firstName,
@@ -332,7 +334,24 @@ const NewClaim = (props) => {
         axios.post('/claims/new', claimValues)
             .then(info => console.log(info))
             .catch(err => alert(err.message));
-    }
+    };
+
+    const deleteClaim = () => {
+        let claimID;
+        if (window.location.search) {
+            const urlClaimNumber = window.location.search;
+            claimID = urlClaimNumber.slice(1, urlClaimNumber.length);
+        } else {
+            claimID = props.claimNumber;
+        }
+        console.log(claimID);
+        if (window.confirm('Are you sure you want to delete this claim? It can not be undone')) {
+            axios.delete('/claims/deleteclaim', {params: {id: claimID}})
+                .then(item => alert(item.data))
+                .then(() => window.location.href = '/')
+                .catch(err => alert(err))
+        }
+    };
 
     const tabClasses = useTabStyles();
     const classes = useStyles();
@@ -399,10 +418,19 @@ const NewClaim = (props) => {
                 }}
             >
                 <Paper square className={tabClasses.root} style={{width: '100%', minWidth: '100%'}}>
+                    <p
+                        style={{
+                            float: 'left',
+                            fontSize: '180%',
+                            margin: '20px 0 0 20px'
+                        }}
+                    >
+                        Claim Number: {props.claimNumber ? props.claimNumber : claimNumber}
+                    </p>
                     <Tab onClick={saveForm} style={{border: '1px solid gray', color: 'green', float: 'right'}}
                          icon={<PhoneIcon/>}
                          label="Save"/>
-                    <Tab style={{border: '1px solid gray', color: 'red', float: 'right'}} icon={<PersonPinIcon/>}
+                    <Tab onClick={deleteClaim} style={{border: '1px solid gray', color: 'red', float: 'right'}} icon={<PersonPinIcon/>}
                          label="Delete"/>
                 </Paper>
             </AppBar>
