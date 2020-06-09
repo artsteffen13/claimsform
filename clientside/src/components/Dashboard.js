@@ -112,7 +112,7 @@ const Dashboard = () => {
                     autoComplete='off'
                     method="POST"
                     action="/claims/claimnumbersearch"
-                    onClick={claimsNumberSearch}
+                    onSubmit={claimsNumberSearch}
                     style={{display: 'block', margin: 'auto', textAlign: 'center'}}
                 >
                     <CssTextField
@@ -140,7 +140,7 @@ const Dashboard = () => {
                     autoComplete='off'
                     method="POST"
                     action="/claims/lastnamesearch"
-                    onClick={lastNameSearch}
+                    onSubmit={lastNameSearch}
                     style={{display: 'block', margin: 'auto', textAlign: 'center'}}
                 >
                     <CssTextField
@@ -168,7 +168,7 @@ const Dashboard = () => {
                     autoComplete='off'
                     method="POST"
                     action="/claims/platenumbersearch"
-                    onClick={plateNumberSearch}
+                    onSubmit={plateNumberSearch}
                     style={{display: 'block', margin: 'auto', textAlign: 'center'}}
                 >
                     <CssTextField
