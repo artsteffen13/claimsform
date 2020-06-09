@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
     const classes = useStyles();
-    const validButtonStyles = {margin: '40px auto', width: '80%', cursor: 'pointer'};
 
     return (
         <div>
@@ -68,7 +67,7 @@ const Login = () => {
                     id='password'
                 />
                 <Button
-                    style={validButtonStyles}
+                    style={{margin: '40px auto', width: '80%', cursor: 'pointer'}}
                     type='submit'
                     variant="contained"
                     color="primary"

@@ -23,4 +23,6 @@ hr {
 li {
   border: 1px solid blue;
   padding: 10px;
+  text-decoration: none;
 }
+

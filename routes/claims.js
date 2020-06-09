@@ -249,7 +249,37 @@ module.exports = (app) => {
     app.get('/claims/searchbyclaimnumber', (req, res) => {
         ClaimInfo.findOne({claimNumber: req.query.claimID}, function (err, claimInfo) {
             if (err) {
-                res.send(err)
+                res.send(err);
+            }
+            res.send(claimInfo);
+        });
+    });
+
+    app.get('/claims/claimnumbersearch', (req, res) => {
+        console.log(req.query)
+            ClaimInfo.find({claimNumber: req.query.claimNumber}, function (err, claimInfo) {
+                if (err) {
+                    res.send(err);
+                }
+                res.send(claimInfo);
+            });
+    });
+
+    app.get('/claims/lastnamesearch', (req, res) => {
+        console.log(req.query)
+        ClaimInfo.find({"driverValues.lastName": req.query.lastName}, function (err, claimInfo) {
+            if (err) {
+                res.send(err);
+            }
+            res.send(claimInfo);
+        });
+    });
+
+    app.get('/claims/platenumbersearch', (req, res) => {
+        console.log(req.query)
+        ClaimInfo.find({"vehicleValues.plate": req.query.plateNumber}, function (err, claimInfo) {
+            if (err) {
+                res.send(err);
             }
             res.send(claimInfo);
         });
