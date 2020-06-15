@@ -106,6 +106,8 @@ const Dashboard = () => {
     return (
         <div>
             <div>
+                <h1 style={{textAlign: 'center'}}>Search</h1>
+                <hr/>
                 <form
                     className={classes.root}
                     noValidate

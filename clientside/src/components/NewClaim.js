@@ -13,7 +13,16 @@ import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import PhoneIcon from '@material-ui/icons/Phone';
-import PersonPinIcon from '@material-ui/icons/PersonPin';
+import PersonIcon from '@material-ui/icons/Person';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import BuildIcon from '@material-ui/icons/Build';
+import BlockIcon from '@material-ui/icons/Block';
+import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
+import PeopleIcon from '@material-ui/icons/People';
+import GavelIcon from '@material-ui/icons/Gavel';
+import NotesIcon from '@material-ui/icons/Notes';
+import CheckIcon from '@material-ui/icons/Check';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -32,7 +41,10 @@ const useTabStyles = makeStyles({
         flexGrow: 1,
         margin: "auto",
         width: '100%',
-        maxWidth: '1200px'
+        maxWidth: '1200px',
+        '& .Mui-selected': {
+            color: 'blue'
+        }
     },
 });
 
@@ -55,6 +67,9 @@ const CssTextField = withStyles({
                 borderColor: 'green',
             },
         },
+        '& .Mui-disabled': {
+            opacity: '.2',
+        }
     },
 })(TextField);
 
@@ -64,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         flexWrap: 'wrap',
         margin: '20px auto',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     margin: {
         margin: theme.spacing(4),
@@ -428,9 +443,9 @@ const NewClaim = (props) => {
                         Claim Number: {props.claimNumber ? props.claimNumber : claimNumber}
                     </p>
                     <Tab onClick={saveForm} style={{border: '1px solid gray', color: 'green', float: 'right'}}
-                         icon={<PhoneIcon/>}
+                         icon={<SaveAltIcon/>}
                          label="Save"/>
-                    <Tab onClick={deleteClaim} style={{border: '1px solid gray', color: 'red', float: 'right'}} icon={<PersonPinIcon/>}
+                    <Tab onClick={deleteClaim} style={{border: '1px solid gray', color: 'red', float: 'right'}} icon={<BlockIcon/>}
                          label="Delete"/>
                 </Paper>
             </AppBar>
@@ -453,14 +468,14 @@ const NewClaim = (props) => {
                         variant="scrollable"
                         scrollButtons="auto"
                     >
-                        <Tab icon={<PersonPinIcon/>} label="Driver" {...a11yProps(0)} />
-                        <Tab icon={<PersonPinIcon/>} label="Vehicle" {...a11yProps(1)} />
-                        <Tab icon={<PersonPinIcon/>} label="Accident" {...a11yProps(2)} />
-                        <Tab icon={<PersonPinIcon/>} label="Other Parties" {...a11yProps(3)} />
-                        <Tab icon={<PersonPinIcon/>} label="Police Info" {...a11yProps(4)} />
-                        <Tab icon={<PersonPinIcon/>} label="Repair Shop" {...a11yProps(5)} />
-                        <Tab icon={<PersonPinIcon/>} label="Notes" {...a11yProps(6)} />
-                        <Tab icon={<PersonPinIcon/>} label="Summary" {...a11yProps(7)} />
+                        <Tab icon={<PersonIcon/>} label="Driver" {...a11yProps(0)} />
+                        <Tab icon={<DriveEtaIcon/>} label="Vehicle" {...a11yProps(1)} />
+                        <Tab icon={<PriorityHighIcon/>} label="Accident" {...a11yProps(2)} />
+                        <Tab icon={<PeopleIcon/>} label="Other Parties" {...a11yProps(3)} />
+                        <Tab icon={<GavelIcon/>} label="Police Info" {...a11yProps(4)} />
+                        <Tab icon={<BuildIcon/>} label="Repair Shop" {...a11yProps(5)} />
+                        <Tab icon={<NotesIcon/>} label="Notes" {...a11yProps(6)} />
+                        <Tab icon={<CheckIcon/>} label="Summary" {...a11yProps(7)} />
                     </Tabs>
                 </Paper>
             </AppBar>
